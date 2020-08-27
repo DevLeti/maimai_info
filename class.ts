@@ -21,6 +21,15 @@ export class Data extends Song{
         this.level = level;
         this.score = score;
     }
+
+    Print(){
+        console.log('this.name = ' + this.name);
+        console.log('this.composer = ' + this.composer);
+        console.log('this.imgsrc = ' + this.imgsrc);
+        console.log('this.rank = ' + this.rank);
+        console.log('this.level = ' + this.level);
+        console.log('this.score = ' + this.score);
+    }
 }
 
 export class DataArr{
@@ -33,5 +42,9 @@ export class DataArr{
 
     Add_bulk(input_bulk : Data[]){
         this.arr = input_bulk;
+    }
+
+    Print(idx : number){
+        this.arr[idx].Print();
     }
 }
