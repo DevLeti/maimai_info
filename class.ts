@@ -2,10 +2,12 @@ export class Song{
     name : string;
     composer : string;
     imgsrc : string;
-    constructor (name : string, composer : string, imgsrc : string){
+    genre : string;
+    constructor (name : string, composer : string, imgsrc : string,genre : string){
         this.name = name;
         this.composer = composer;
         this.imgsrc = imgsrc;
+        this.genre = genre;
     }
 }
 
@@ -14,9 +16,9 @@ export class Data extends Song{
     rank : string;
     level : number;
     score : number;
-    constructor(name : string, composer : string, imgsrc: string,
+    constructor(name : string, composer : string, imgsrc: string, genre : string,
                 rank : string, level : number, score : number){
-        super(name, composer, imgsrc);
+        super(name, composer, imgsrc, genre);
         this.rank = rank;
         this.level = level;
         this.score = score;
