@@ -63,7 +63,7 @@ for (var i = 1; i < 24; i++)
      */
     for(var j = 0; j < arr.length; j++)
     {
-        idx = arr[j].attributes[2].value;
+        var idx = arr[j].attributes[2].value;
         var musicurl = 'https://maimaidx-eng.com/maimai-mobile/record/musicDetail/?idx=';
         var url = musicurl + idx;
         http.open("GET", url, false);
