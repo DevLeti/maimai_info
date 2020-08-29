@@ -36,6 +36,7 @@ for문 돌려서 xmlhttprequest한 후 getelementsbyname("idx") 하면 될듯?
 
 
 var http = new XMLHttpRequest();
+var idxList = [];
 for (var i = 1; i < 24; i++)
 {
     var level_url = 'https://maimaidx-eng.com/maimai-mobile/record/musicLevel/search/?level=' + i;
@@ -44,10 +45,11 @@ for (var i = 1; i < 24; i++)
 
     var parser = new DOMParser();
     var response = parser.parseFromString(http.responseText, "text/html");
-    console.log(response);
+    //console.log(response);
 
     var arr = response.getElementsByName("idx"); //index values []
-    console.log(arr.length);
+    idxList.push(arr);
+    //console.log(i + 'level\'s idx length : ' +arr.length);
     //idx for문으로 돌아서 하나씩 점수 가져와서 추가해야함.
     
     //song instance 하나 만든 다음
@@ -61,16 +63,31 @@ for (var i = 1; i < 24; i++)
     /**
      * 짧은 시간에 다량의 요청으로 바로 block 당함.. 어떡하지?
      */
-    for(var j = 0; j < arr.length; j++)
-    {
-        var idx = arr[j].attributes[2].value;
-        var musicurl = 'https://maimaidx-eng.com/maimai-mobile/record/musicDetail/?idx=';
-        var url = musicurl + idx;
-        http.open("GET", url, false);
-        http.send();
-        response = parser.parseFromString(http.responseText, "text/html");
-        console.log(response.getElementsByClassName("break")[0]);
-        console.log(response.getElementsByClassName("break")[1]);
+    for (var i = 0; i < idxList.length; i++) {
+        for(var j = 0; j < idxList[i].length; j++)
+        {
+            var idx = idxList[i][j].value;
+            var musicurl = 'https://maimaidx-eng.com/maimai-mobile/record/musicDetail/?idx=';
+            var url = musicurl + idx;
+            setTimeout(function () {
+                // try{
+                    http.open("GET", url, false);
+                    http.send();
+                    response = parser.parseFromString(http.responseText, "text/html");
+                    if(response.getElementsByClassName("break") != null)
+                    {
+                        console.log('title : ' + response.getElementsByClassName("m_5 f_15 break")[0].textContent);
+                        console.log(response.getElementsByClassName("break")[1].textContent.replace('\n', '').replace('\n', '').replace('			', '').replace(' 		', ''));
+                    }
+        
+                //     throw "index error";
+                // }
+                // catch(e) {
+                //     console.log(e);
+                // }
+                
+            }, 200); //0.2 sec
+        }
     }
 }
 // var idx = arr[0].attributes[2].value; //이게 곡 정보로 들어가는 idx
